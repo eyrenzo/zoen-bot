@@ -5,6 +5,10 @@ require('discord-buttons')(Client);
 const disbut = require("discord-buttons");
 const { MessageButton, MessageActionRow } = require("discord-buttons");
 const { execute } = require("./bouton");
+const client = new Discord.Client;
+require('dotenv').config()
+
+const logChannelId = "866627310639120385"
 
 const prefix = "z/";
 
