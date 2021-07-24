@@ -383,7 +383,7 @@ Client.on("message", message => {
 
 });
 
-Client.login(process.env.TOKEN);
+Client.login(process.env.ZOEN);
 
 // if(message.content == prefix + "embedactivity"){
 //    message.delete();
