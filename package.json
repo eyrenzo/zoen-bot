@@ -1,0 +1,15 @@
+{
+    "name": "zoen",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "author": "$nzo",
+    "liscence": "ISC",
+    "dependencies": {
+        "discord.js": "^12.5.3",
+        "discord-buttons": "^4.0.0"
+    },
+    "scripts": {
+        "start": "node index.js"
+    }
+}
