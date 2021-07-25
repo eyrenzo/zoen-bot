@@ -183,7 +183,7 @@ Client.on("message", message => {
     let args  = message.content.split(" ");
 
     if(message.content == prefix + "testbot"){
-        message.channel.send("Version du bot : " +  Version);
+        message.channel.send("Version du bot : ");
     };
 
     if(message.content == prefix + "invite"){
