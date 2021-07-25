@@ -9,6 +9,7 @@ const { version } = require("os");
 
 Client.login(process.env.KEY);
 
+
 const logChannelId = "866627310639120385"
 
 const Version = "1.5.0"
@@ -182,8 +183,15 @@ Client.on("message", message => {
     if(message.channel.type == "dm")return;
     let args  = message.content.split(" ");
 
-    if(message.content == prefix + "testbot"){
-        message.channel.send("Version du bot : ");
+    if(message.content == prefix + "ver"){
+        message.channel.send("Version du bot : " + Version).then(msg => {
+            setTimeout(() => msg.delete(), 30000)
+          }) 
+        var verembedlog = new Discord.MessageEmbed()
+          .setTitle("Commande")
+          .setDescription("<@" + message.author.id + "> à utilisé **z/ver** dans " + message.channel.name + ".")
+          .setTimestamp()
+        message.guild.channels.cache.find(channel => channel.id === "866627310639120385").send(verembedlog);
     };
 
     if(message.content == prefix + "invite"){
