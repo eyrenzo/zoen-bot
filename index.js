@@ -5,8 +5,9 @@ require('discord-buttons')(Client);
 const disbut = require("discord-buttons");
 const { MessageButton, MessageActionRow } = require("discord-buttons");
 const { execute } = require("./bouton");
-const client = new Discord.Client;
-require('dotenv').config()
+
+//Client.login(process.env.KEY);
+Client.login("ODY1OTQ0MDUxMDI3Mjc5OTMy.YPLXPg.GpAHyW7GQiRW68yIYtgbNy780lY")
 
 const logChannelId = "866627310639120385"
 
@@ -140,9 +141,9 @@ Client.on("messageDelete", function(messagesuppr) {
         //post in the guild's log channel
         var embeddeletelog = new Discord.MessageEmbed()
             .setTitle("🗑 Message Supprimé")
-            .addField("De :", messagesuppr.author.username)
-            .addField("Message :", messagesuppr.cleanContent)
-            .addField("Salon :", messagesuppr.channel.name)
+            .addField("De :", messagesuppr.author.username, true)
+            .addField("Message :", messagesuppr.cleanContent, true)
+            .addField("Salon :", messagesuppr.channel.name, true)
             .setThumbnail(messagesuppr.author.avatarURL)
             .setColor("#ff6969");
             messagesuppr.guild.channels.cache.find(channel => channel.id === "866627310639120385").send(embeddeletelog)
@@ -153,9 +154,11 @@ Client.on("messageUpdate", (oldMessage, newMessage) => {
     var embedmodiflog = new Discord.MessageEmbed()
     .setTitle("Message modifié")
     .setColor("#ffb769")
-    .addField("Original :", oldMessage)
-    .addField("Nouveau :", newMessage)
-    .addField("Salon :", oldMessage.channel.name)
+    .addField("De :", newMessage.author.username, true)
+    .addField("Original :", oldMessage, true)
+    .addField("Nouveau :", newMessage, true)
+    .addField("Salon :", oldMessage.channel.name, true)
+    .setTimestamp()
     newMessage.guild.channels.cache.find(channel => channel.id === "866627310639120385").send(embedmodiflog)
 });
 
@@ -164,8 +167,8 @@ Client.on("message", messagemp => {
     console.log(messagemp.content);
     var recumpembed = new Discord.MessageEmbed()
     .setTitle("Message reçu en message privé !")
-    .addField("Pseudo :", "<@" + messagemp.author.id + ">")
-    .addField("Message : ", messagemp.content)
+    .addField("Pseudo :", "<@" + messagemp.author.id + ">", true)
+    .addField("Message : ", messagemp.content, true)
     .setTimestamp()
     Client.guilds.cache.find(guild => guild.id === "865586758942064641").channels.cache.find(channel => channel.id === "866627310639120385").send(recumpembed)
 });
@@ -213,37 +216,37 @@ Client.on("message", message => {
         message.guild.channels.cache.find(channel => channel.id === "866627310639120385").send(prefixembedlog)
     }
 
-    if(message.member.hasPermission("MANAGE_ROLES")){
-        if(message.content.startsWith(prefix + "actif")){
-            message.delete();
-            let mention = message.mentions.members.first();
-
-            if(mention == undefined){
-                message.channel.send("Aucun utilisateur trouvé").then(msg => {
-                    setTimeout(() => msg.delete(), 10000)
-                })
-                .catch();
-            }
-            else {
-                mention.roles.add("865635854256439297");
-                message.channel.send("Le rôle actif à bien été attribué à " + mention).then(msg => {
-                    setTimeout(() => msg.delete(), 10000)
-                })
-                var embedactif = new Discord.MessageEmbed()
-                .setTitle("Félicitations ! Vous venez d'acquérir le rôle Membre Actif !")
-                .setDescription("Grâce à votre activité sur Zoen, le rôle Membre Actif vous a été donné ! Si vous avez la moindre question, rendez vous [ici](https://discord.com/channels/865586758942064641/865935500338135060/867717981995794453).")
-                .setThumbnail("https://cdn.discordapp.com/attachments/845953699943809058/868464131165028352/photo_de_profil_Zoen_bot.png")
-                .setColor("#5081ff")
-                .setFooter("Passez une bonne journée sur Zoen ")
-
-                mention.send(embedactif)
-                var actifembedlog = new Discord.MessageEmbed()
-                      .setTitle("Commande")
-                      .setDescription("<@" + message.author.id + "> à utilisé **z/actif** sur <@" + mention.user.id + ">")
-                    mention.guild.channels.cache.find(channel => channel.id === "866627310639120385").send(actifembedlog)
-            }
-        }
-    }
+    //if(message.member.hasPermission("MANAGE_ROLES")){
+    //    if(message.content.startsWith(prefix + "actif")){
+    //        message.delete();
+    //        let mention = message.mentions.members.first();
+    //
+    //        if(mention == undefined){
+    //            message.channel.send("Aucun utilisateur trouvé").then(msg => {
+    //                setTimeout(() => msg.delete(), 10000)
+    //            })
+    //           .catch();
+    //        }
+    //        else {
+    //            mention.roles.add("865635854256439297");
+    //            message.channel.send("Le rôle actif à bien été attribué à " + mention).then(msg => {
+    //                setTimeout(() => msg.delete(), 10000)
+    //            })
+    //            var embedactif = new Discord.MessageEmbed()
+    //            .setTitle("Félicitations ! Vous venez d'acquérir le rôle Membre Actif !")
+    //            .setDescription("Grâce à votre activité sur Zoen, le rôle Membre Actif vous a été donné ! Si vous avez la moindre question, rendez vous [ici](https://discord.com/channels/865586758942064641/865935500338135060/867717981995794453).")
+    //            .setThumbnail("https://cdn.discordapp.com/attachments/845953699943809058/868464131165028352/photo_de_profil_Zoen_bot.png")
+    //            .setColor("#5081ff")
+    //            .setFooter("Passez une bonne journée sur Zoen ")
+    //
+    //            mention.send(embedactif);
+    //            var actifembedlog = new Discord.MessageEmbed()
+    //                  .setTitle("Commande")
+    //                  .setDescription("<@" + message.author.id + "> à utilisé **z/actif** sur <@" + mention.user.id + ">", "ㅤ")
+    //                mention.guild.channels.cache.find(channel => channel.id === "866627310639120385").send(actifembedlog)
+    //        }
+    //    }
+    //}
 
     if(message.member.hasPermission("BAN_MEMBERS")){
         if(message.content.startsWith(prefix + "ban")){
@@ -386,8 +389,6 @@ Client.on("message", message => {
     //}
 
 });
-
-Client.login(process.env.ZOEN);
 
 // if(message.content == prefix + "embedactivity"){
 //    message.delete();
