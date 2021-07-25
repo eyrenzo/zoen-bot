@@ -6,8 +6,7 @@ const disbut = require("discord-buttons");
 const { MessageButton, MessageActionRow } = require("discord-buttons");
 const { execute } = require("./bouton");
 
-//Client.login(process.env.KEY);
-Client.login("ODY1OTQ0MDUxMDI3Mjc5OTMy.YPLXPg.GpAHyW7GQiRW68yIYtgbNy780lY")
+Client.login(process.env.KEY);
 
 const logChannelId = "866627310639120385"
 
@@ -164,6 +163,7 @@ Client.on("messageUpdate", (oldMessage, newMessage) => {
 
 Client.on("message", messagemp => {
     if(messagemp.channel.type !== "dm")return;
+    if(messagemp.author.bot)return;
     console.log(messagemp.content);
     var recumpembed = new Discord.MessageEmbed()
     .setTitle("Message reçu en message privé !")
@@ -216,37 +216,36 @@ Client.on("message", message => {
         message.guild.channels.cache.find(channel => channel.id === "866627310639120385").send(prefixembedlog)
     }
 
-    //if(message.member.hasPermission("MANAGE_ROLES")){
-    //    if(message.content.startsWith(prefix + "actif")){
-    //        message.delete();
-    //        let mention = message.mentions.members.first();
-    //
-    //        if(mention == undefined){
-    //            message.channel.send("Aucun utilisateur trouvé").then(msg => {
-    //                setTimeout(() => msg.delete(), 10000)
-    //            })
-    //           .catch();
-    //        }
-    //        else {
-    //            mention.roles.add("865635854256439297");
-    //            message.channel.send("Le rôle actif à bien été attribué à " + mention).then(msg => {
-    //                setTimeout(() => msg.delete(), 10000)
-    //            })
-    //            var embedactif = new Discord.MessageEmbed()
-    //            .setTitle("Félicitations ! Vous venez d'acquérir le rôle Membre Actif !")
-    //            .setDescription("Grâce à votre activité sur Zoen, le rôle Membre Actif vous a été donné ! Si vous avez la moindre question, rendez vous [ici](https://discord.com/channels/865586758942064641/865935500338135060/867717981995794453).")
-    //            .setThumbnail("https://cdn.discordapp.com/attachments/845953699943809058/868464131165028352/photo_de_profil_Zoen_bot.png")
-    //            .setColor("#5081ff")
-    //            .setFooter("Passez une bonne journée sur Zoen ")
-    //
-    //            mention.send(embedactif);
-    //            var actifembedlog = new Discord.MessageEmbed()
-    //                  .setTitle("Commande")
-    //                  .setDescription("<@" + message.author.id + "> à utilisé **z/actif** sur <@" + mention.user.id + ">", "ㅤ")
-    //                mention.guild.channels.cache.find(channel => channel.id === "866627310639120385").send(actifembedlog)
-    //        }
-    //    }
-    //}
+    if(message.member.hasPermission("MANAGE_ROLES")){
+        if(message.content.startsWith(prefix + "actif")){
+            message.delete();
+            let mention = message.mentions.members.first();
+    
+            if(mention == undefined){
+                message.channel.send("Aucun utilisateur trouvé").then(msg => {
+                    setTimeout(() => msg.delete(), 10000)
+                })
+               .catch();
+            }
+            else {
+                mention.roles.add("865635854256439297");
+                message.channel.send("Le rôle actif à bien été attribué à " + mention).then(msg => {
+                    setTimeout(() => msg.delete(), 10000)
+                })
+                var embedactif = new Discord.MessageEmbed()
+                .setTitle("🎉 Félicitations ! Vous venez d'acquérir le rôle Membre Actif !")
+                .setDescription("Grâce à votre activité sur Zoen, le rôle Membre Actif vous a été donné ! Si vous avez la moindre question, rendez vous [ici](https://discord.com/channels/865586758942064641/865935500338135060/867717981995794453)")
+                .setThumbnail("https://cdn.discordapp.com/attachments/845953699943809058/868464131165028352/photo_de_profil_Zoen_bot.png")
+                .setColor("#5081ff")
+                .setFooter("Passez une bonne journée sur Zoen ")
+                var actifembedlog = new Discord.MessageEmbed()
+                      .setTitle("Commande")
+                      .setDescription("<@" + message.author.id + "> à utilisé **z/actif** sur <@" + mention.user.id + ">", "ㅤ")
+                mention.guild.channels.cache.find(channel => channel.id === "866627310639120385").send(actifembedlog)
+                mention.send(embedactif);
+            }
+        }
+    }
 
     if(message.member.hasPermission("BAN_MEMBERS")){
         if(message.content.startsWith(prefix + "ban")){
@@ -402,3 +401,19 @@ Client.on("message", message => {
 
 //membre actif : 866988533260877824
 //role invisible : 865923506025791508
+
+// var embed = new Discord.MessageEmbed()
+//        .setColor("#ffffff")
+//        .setTitle("titre")
+//        .setAuthor("Enzo", "https://imgur.com", "https://youtube.com")
+//        .setThumbnail("https://imgur.com")
+//        .addField("Titre du field", "contenu du field", false)
+//        .addField("field aligné", "contenu du field aligné", true)
+//        // Field Vide
+//        .addField("\u2000B", "\u200B",false)
+//        .setImage("https://imgur.com")
+//        .setTimestamp()
+//        .setFooter("footer", "https://youtube.com")
+//        
+//
+//    message.channel.send(embed);
