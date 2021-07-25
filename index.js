@@ -5,17 +5,20 @@ require('discord-buttons')(Client);
 const disbut = require("discord-buttons");
 const { MessageButton, MessageActionRow } = require("discord-buttons");
 const { execute } = require("./bouton");
+const { version } = require("os");
 
 Client.login(process.env.KEY);
 
 const logChannelId = "866627310639120385"
+
+const Version = "1.5.0"
 
 const prefix = "z/";
 
 Client.on("ready", () => {
     console.log("Presque prêt 👀");
 
-    Client.user.setActivity("Zoen V.1.5")
+    Client.user.setActivity("Zoen" + Version)
 
     Client.guilds.cache.find(guild => guild.id === "865586758942064641").channels.cache.find(channel => channel.id === "865930329005228062").messages.fetch("868106384514904084").then(message => {
         console.log("message ajouté à la mémoire : " + message.content);
@@ -150,6 +153,7 @@ Client.on("messageDelete", function(messagesuppr) {
 });
 
 Client.on("messageUpdate", (oldMessage, newMessage) => {
+    if(newMessage.author.bot)return;
     var embedmodiflog = new Discord.MessageEmbed()
     .setTitle("Message modifié")
     .setColor("#ffb769")
@@ -177,6 +181,10 @@ Client.on("message", message => {
     if(message.author.bot)return;
     if(message.channel.type == "dm")return;
     let args  = message.content.split(" ");
+
+    if(message.content == prefix + "testbot"){
+        message.channel.send("Version du bot : " +  Version)
+    }
 
     if(message.content == prefix + "invite"){
         message.delete();
